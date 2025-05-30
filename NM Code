@@ -1,0 +1,156 @@
+1.Simple sales report using Google Colab
+
+1. Open Google Colab
+
+Go to: https://colab.research.google.com
+Click on “New Notebook”
+
+2. Program:
+
+import pandas as pd
+import matplotlib.pyplot as plt
+data = {
+    'Product': ['A', 'B', 'A', 'C', 'B', 'C', 'A'],
+    'Quantity': [10, 5, 8, 6, 9, 4, 7],
+    'Price': [100, 200, None, 300, None, 350, 100]
+}
+df = pd.DataFrame(data)
+df['Price'] = df.groupby('Product')['Price'].transform(lambda x: x.fillna(x.mean()))
+df['Total_Sales'] = df['Quantity'] * df['Price']
+sales_by_product = df.groupby('Product')['Total_Sales'].sum()
+top_product = sales_by_product.idxmax()
+print(f"Product with highest total sales: {top_product}")
+sales_by_product.plot(kind='bar', color='skyblue')
+plt.title('Total Sales by Product')
+plt.xlabel('Product')
+plt.ylabel('Total Sales')
+plt.grid(axis='y')
+plt.show()
+
+
+2.Daily Temperature Tracker analysis in Google Colab
+
+1. Open Google Colab
+
+Go to https://colab.research.google.com
+Click "New Notebook"
+
+2. Program:
+
+import pandas as pd
+import matplotlib.pyplot as plt
+data = {
+    'Date': ['2025-05-01', '2025-05-02', '2025-05-03', '2025-05-04', '2025-05-05'],
+    'Min_Temp': [22, 24, None, 23, 25],
+    'Max_Temp': [34, None, 36, 35, 37]
+}
+df = pd.DataFrame(data)
+df['Date'] = pd.to_datetime(df['Date'])
+df['Min_Temp'].fillna(df['Min_Temp'].mean(), inplace=True)
+df['Max_Temp'].fillna(df['Max_Temp'].mean(), inplace=True)
+df['Average_Temp'] = (df['Min_Temp'] + df['Max_Temp']) / 2
+hottest_day = df.loc[df['Average_Temp'].idxmax()]
+print(f"Date with highest average temperature: {hottest_day['Date'].date()}")
+plt.figure(figsize=(10,5))
+plt.plot(df['Date'], df['Average_Temp'], marker='o', linestyle='-', color='orange')
+plt.title('Average Temperature Over Time')
+plt.xlabel('Date')
+plt.ylabel('Average Temperature')
+plt.grid(True)
+plt.xticks(rotation=45)
+plt.tight_layout()
+plt.show() 
+
+
+
+3.COVID-19 Daily Cases analysis using Google Colab
+
+1. Open Google Colab
+
+Go to https://colab.research.google.com
+Click on “New Notebook”
+
+2. Program:
+
+import pandas as pd
+import matplotlib.pyplot as plt
+data = {
+    'Date': ['2025-05-01', '2025-05-02', '2025-05-03', '2025-05-04', '2025-05-05'],
+    'Cases': [100, None, 250, 180, None]
+}
+df = pd.DataFrame(data)
+df['Date'] = pd.to_datetime(df['Date'])
+df['Cases'].fillna(0, inplace=True)
+total_cases = df['Cases'].sum()
+average_cases = df['Cases'].mean()
+print(f"Total Cases: {total_cases}")
+print(f"Average Daily Cases: {average_cases}")
+highest_day = df.loc[df['Cases'].idxmax()]
+print(f"Date with highest cases: {highest_day['Date'].date()}, Cases: {highest_day['Cases']}")
+plt.figure(figsize=(10,5))
+plt.plot(df['Date'], df['Cases'], marker='o', linestyle='-', color='red')
+plt.title('COVID-19 Daily Cases')
+plt.xlabel('Date')
+plt.ylabel('Cases')
+plt.grid(True)
+plt.xticks(rotation=45)
+plt.tight_layout()
+plt.show()
+
+
+4.Movie Ratings Dataset in Google Colab
+
+1. Open Google Colab
+
+Visit: https://colab.research.google.com
+Click "New Notebook"
+
+2. Program
+
+import pandas as pd
+import matplotlib.pyplot as plt
+data = {
+    'Movie_Name': ['Movie A', 'Movie B', 'Movie C', 'Movie D', 'Movie E', 'Movie F'],
+    'Viewer_Rating': [4.5, 4.0, None, 3.5, 5.0, 4.8]
+}
+df = pd.DataFrame(data)
+average_rating = df['Viewer_Rating'].mean()
+print(f"Average Viewer Rating: {average_rating:.2f}")
+top_3 = df.sort_values(by='Viewer_Rating', ascending=False).head(3)
+print("Top 3 Movies:")
+print(top_3)
+top_5 = df.sort_values(by='Viewer_Rating', ascending=False).head(5)
+plt.figure(figsize=(8,5))
+plt.bar(top_5['Movie_Name'], top_5['Viewer_Rating'], color='purple')
+plt.title('Top 5 Movie Ratings')
+plt.xlabel('Movie Name')
+plt.ylabel('Viewer Rating')
+plt.ylim(0, 5)
+plt.grid(axis='y')
+plt.tight_layout()
+plt.show()
+
+5.Online Course Completion Data in Google Colab
+
+1. Open Google Colab
+
+Go to https://colab.research.google.com
+Click “New Notebook”
+
+2. Program:
+
+import pandas as pd
+import matplotlib.pyplot as plt
+data = {
+    'Student_ID': [101, 102, 103, 104, 105],
+    'Completion_Status': ['Yes', None, 'No', 'Yes', None]
+}
+df = pd.DataFrame(data)
+df['Completion_Status'].fillna('No', inplace=True)
+completed_count = df[df['Completion_Status'] == 'Yes'].shape[0]
+print(f"Number of students who completed the course: {completed_count}")
+status_counts = df['Completion_Status'].value_counts()
+plt.figure(figsize=(6,6))
+plt.pie(status_counts, labels=status_counts.index, autopct='%1.1f%%', startangle=90, colors=['green', 'red'])
+plt.title('Course Completion Distribution')
+plt.show()
